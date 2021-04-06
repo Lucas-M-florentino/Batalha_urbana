@@ -1,4 +1,8 @@
-/*  atividade 1 cena do jogo batalha urbana  */
+/*****************************************************************************
+ *  Universidade Federal da Grande Dourados - UFGD                           *
+ *  Trabalho 1 da disciplina de Computação Gráfica - Batalha Urbana          *
+ *  Caio Fernandes Lima, Lucas Matheus de Moraes Florentino                  *
+ *****************************************************************************/
 
 #include <stdio.h>
 #include <GL/glut.h>
@@ -67,7 +71,6 @@ int jogada = 0;
 int pontoJ1 = 0;
 int pontoJ2 = 0;
 
-void time1(int value);
 void redisplay(int value);
 static void balisticaBomba();
 void trajetoria(float teta,float V0);
@@ -226,7 +229,7 @@ void textoBotoes()
     sprintf(buf,"Jogador 2:");
     renderbitmap(-29,58,GLUT_BITMAP_HELVETICA_12, buf);
 
- 
+
     glColor3f(0.0,0.0,1.0);
     sprintf(buf,"Angulo: 'a' & 'd'");
     renderbitmap(-29,55,GLUT_BITMAP_HELVETICA_12, buf);
@@ -263,7 +266,7 @@ void textoPonto()
     char buf[100] = {0};
     glColor3f(0.0,0.0,0.0);
     sprintf(buf,"Melhor de 3!");
-    renderbitmap(-3,69,GLUT_BITMAP_HELVETICA_12, buf);
+    renderbitmap(-3,71,GLUT_BITMAP_HELVETICA_12, buf);
     sprintf(buf,"Score: ");
     renderbitmap(-2,68,GLUT_BITMAP_HELVETICA_18, buf);
 
@@ -328,7 +331,7 @@ void impacto(float x, float y){
     elipse();
 
     while(i < 300){
-    
+
     if(c%2 == 0){
     glLoadIdentity();//////////
     glColor3f(1,0.8,0);
@@ -348,7 +351,7 @@ void impacto(float x, float y){
     glTranslatef(0,0.5,0);
     triangulo();
     glColor3f(1,0,0);
-    
+
     glScaled(0.9,0.9,0);
     triangulo();
 
@@ -661,7 +664,7 @@ static void muros()
   retangulo( 10 * HEIGHT_TIJOLO, 2.5 * WIDTH_TIJOLO);
   glTranslatef(0.5 * WIDTH_TIJOLO, 0.0, 0.0 );
   pedacoMuro(10 , 2.0 , 1);
- 
+
 }
 void muros2()
 {
@@ -699,7 +702,7 @@ void muros2()
 }
 void espaco1(){///// mapeia possiveis posições para carrinhos
 
-   
+
   vetPCarM1[0][0] = -ORTO_X + ((2.5 * WIDTH_TIJOLO)/2);
   vetPCarM1[0][1] = -ORTO_Y + (9*HEIGHT_TIJOLO);
 
@@ -753,7 +756,7 @@ void menuBox(){
   glLoadIdentity();
   textoBotoes();
 
-  
+
 }
 
 void spawnCar2(){
@@ -766,12 +769,12 @@ void spawnCar2(){
     pontoJ2 = 0;
     novoJogo = false;
   }
-  
+
   if(mapa == 0){
   int C1 = rand()%6;
   int C2 = rand()%6;
   espaco1();
-  
+
    while(C2 == C1){
     C2 = rand()%6;
   }
@@ -783,7 +786,7 @@ void spawnCar2(){
   PColisao1[1] = vetPCarM1[C1][1];
   PColisao2[0] = vetPCarM1[C2][0];
   PColisao2[1] = vetPCarM1[C2][1];
-  
+
   }else{
     int C1 = rand()%4;
     int C2 = rand()%4;
@@ -812,10 +815,9 @@ void transformacao(){
     muros();
   }
   else if(mapa == 1){
-    
+
   muros2();
   }
-
 
   glLoadIdentity();
   glPushMatrix();
@@ -840,8 +842,6 @@ void transformacao(){
   trajetoria(teta_tankAzul,V02);
   }
 
-   glutTimerFunc(100,time1,1);
-
   glLoadIdentity();
   textoVelo();
   glLoadIdentity();
@@ -859,8 +859,8 @@ void transformacao(){
     if(jogada == 1){
       glLoadIdentity();
       impacto(atualPcar2[0],atualPcar2[1]);
-      
-      if(tcolisao < 1){
+        glutPostRedisplay();
+      if(tcolisao < 100){
         tcolisao += 1;
       }
       else{
@@ -870,9 +870,10 @@ void transformacao(){
     }
   else{
     glLoadIdentity();
-    
+
     impacto(atualPcar1[0],atualPcar1[1]);
-      if(tcolisao < 1){
+    glutPostRedisplay();
+      if(tcolisao < 100){
         tcolisao += 1;
       }
       else{
@@ -881,9 +882,9 @@ void transformacao(){
       }
   }
   }else if(colisaoM){
-   
+
     colisaoM = false;
-      
+
   }
   if(menu){
     menuBox();
@@ -913,7 +914,7 @@ static void balisticaBomba()
   if(jogada == 0){
     translateX = X_bomba + delta_espaco_X + (-0.50 + atualPcar1[0]); /// posiciona objetos para jogador 1
     translateY = Y_bomba + delta_espaco_Y + (3.7+atualPcar1[1]);
-    
+
 
     if(translateX > PColisao2[0] - tx/2 && translateX < PColisao2[0] + tx/2 // trata colisão com jogador 2
       && translateY > PColisao2[1] &&  translateY < PColisao2[1] + ty+3.5){
@@ -927,16 +928,16 @@ static void balisticaBomba()
       jogada = 1;
       pontoJ1 += 1;
       posicao = false;
-    
+
     glutPostRedisplay();
   }
   else if(mapa == 0){
-    if(translateX > -ORTO_X && translateX < -ORTO_X + 22.5 * WIDTH_TIJOLO 
-          && translateY > -ORTO_Y && translateY < -ORTO_Y + 9 * HEIGHT_TIJOLO || 
+    if(translateX > -ORTO_X && translateX < -ORTO_X + 22.5 * WIDTH_TIJOLO
+          && translateY > -ORTO_Y && translateY < -ORTO_Y + 9 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 2.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 2.5 * WIDTH_TIJOLO + 6.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 15 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 12 * WIDTH_TIJOLO && translateX < -ORTO_X + 12 * WIDTH_TIJOLO + 8.5 * WIDTH_TIJOLO
-          && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 4 * HEIGHT_TIJOLO || 
+          && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 4 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 12 * WIDTH_TIJOLO && translateX < -ORTO_X + 12 * WIDTH_TIJOLO + 2.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 14 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 14 *  HEIGHT_TIJOLO + 10 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 17.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 17.5 * WIDTH_TIJOLO + 2.5 * WIDTH_TIJOLO
@@ -957,7 +958,7 @@ static void balisticaBomba()
           }
           glutPostRedisplay();
       }
-  
+
 
       else{ ////   lançamento de projetil
 
@@ -968,7 +969,7 @@ static void balisticaBomba()
         Bomba();
         glScaled(1/0.5, 1/0.5, 0.0);
         glutTimerFunc(30, redisplay, X_bomba);
-        
+
       }
   }
   else{
@@ -976,7 +977,7 @@ static void balisticaBomba()
           && translateY > -ORTO_Y && translateY < -ORTO_Y + 9 * HEIGHT_TIJOLO || translateX > -ORTO_X && translateX < -ORTO_X + 2.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO +  6 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 7.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 7.5 * WIDTH_TIJOLO + 2.5 * WIDTH_TIJOLO
-          && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 15 * HEIGHT_TIJOLO || 
+          && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 15 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 5 * WIDTH_TIJOLO && translateX < -ORTO_X + 5 * WIDTH_TIJOLO + 7.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 24 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 24 *  HEIGHT_TIJOLO + 5 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 15 * WIDTH_TIJOLO && translateX < -ORTO_X + 15 * WIDTH_TIJOLO + 5.5 * WIDTH_TIJOLO
@@ -1008,7 +1009,7 @@ static void balisticaBomba()
       Bomba();
       glScaled(1/0.5, 1/0.5, 0.0);
       glutTimerFunc(30, redisplay, X_bomba);
-      
+
    }
   }
 }
@@ -1024,12 +1025,12 @@ static void balisticaBomba()
 
     bomba = false;
     delta_tempo = 0;
-   
+
     jogada = 0;
 
     pontoJ2 += 1;
     posicao = false;
-    
+
     glutPostRedisplay();
   }
   else if(mapa == 0){
@@ -1037,7 +1038,7 @@ static void balisticaBomba()
           && translateY > -ORTO_Y && translateY < -ORTO_Y + 9 * HEIGHT_TIJOLO || translateX > -ORTO_X + 2.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 2.5 * WIDTH_TIJOLO + 6.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 15 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 12 * WIDTH_TIJOLO && translateX < -ORTO_X + 12 * WIDTH_TIJOLO + 8.5 * WIDTH_TIJOLO
-          && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 4 * HEIGHT_TIJOLO || 
+          && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 4 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 12 * WIDTH_TIJOLO && translateX < -ORTO_X + 12 * WIDTH_TIJOLO + 2.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 14 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 14 *  HEIGHT_TIJOLO + 10 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 17.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 17.5 * WIDTH_TIJOLO + 2.5 * WIDTH_TIJOLO
@@ -1069,7 +1070,7 @@ static void balisticaBomba()
       Bomba();
       glScaled(1/0.5, 1/0.5, 0.0);
       glutTimerFunc(30, redisplay, X_bomba);
-      
+
    }
   }
   else{
@@ -1077,7 +1078,7 @@ static void balisticaBomba()
           && translateY > -ORTO_Y && translateY < -ORTO_Y + 9 * HEIGHT_TIJOLO || translateX > -ORTO_X && translateX < -ORTO_X + 2.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO +  6 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 7.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 7.5 * WIDTH_TIJOLO + 2.5 * WIDTH_TIJOLO
-          && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 15 * HEIGHT_TIJOLO || 
+          && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 15 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 5 * WIDTH_TIJOLO && translateX < -ORTO_X + 5 * WIDTH_TIJOLO + 7.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 24 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 24 *  HEIGHT_TIJOLO + 5 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 15 * WIDTH_TIJOLO && translateX < -ORTO_X + 15 * WIDTH_TIJOLO + 5.5 * WIDTH_TIJOLO
@@ -1109,7 +1110,7 @@ static void balisticaBomba()
       Bomba();
       glScaled(1/0.5, 1/0.5, 0.0);
       glutTimerFunc(30, redisplay, X_bomba);
-      
+
    }
   }
   }
@@ -1183,7 +1184,7 @@ void Teclado(unsigned char tecla, int x1, int y1)
     exit(0);
     break;
   case 'j':
-    if (RotC1 < 450)
+    if (RotC1 < 450 && !bomba)
     {
       RotC1 += 3;
 
@@ -1196,7 +1197,7 @@ void Teclado(unsigned char tecla, int x1, int y1)
     break;
   case 'l':
 
-    if (RotC1 > 270)
+    if (RotC1 > 270 && !bomba)
     {
       RotC1 -= 3;
       teta_tankVermelho = RotC1 - 270;
@@ -1207,7 +1208,7 @@ void Teclado(unsigned char tecla, int x1, int y1)
     }
     break;
   case 'd':
-    if (RotC2 < 450)
+    if (RotC2 < 450 && !bomba)
     {
       RotC2 += 3;
       teta_tankAzul = 450 - RotC2;
@@ -1216,7 +1217,7 @@ void Teclado(unsigned char tecla, int x1, int y1)
     }
     break;
   case 'a':
-    if (RotC2 > 270)
+    if (RotC2 > 270 && !bomba)
     {
       RotC2 -= 3;
       teta_tankAzul = 450 - RotC2;
@@ -1245,26 +1246,40 @@ void Teclado(unsigned char tecla, int x1, int y1)
   case 't':
     if(jogada == 0)
     {
-      V01 += 2.0;
-      atualPosicaoSlider1_X = (V01 - 25.0)/10.0;
+      if(!bomba)
+      {
+        V01 += 2.0;
+        atualPosicaoSlider1_X = (V01 - 25.0)/10.0;
+
+      }
 
     }else{
-      V02 += 2;
-      atualPosicaoSlider2_X = (V02 - 25.0)/10.0;
+      if(!bomba)
+      {
+        V02 += 2;
+        atualPosicaoSlider2_X = (V02 - 25.0)/10.0;
+      }
 
     }
-    
+
     break;
 
   case 'y':
     if(jogada == 0)
     {
-      V01 -= 2;
-      atualPosicaoSlider1_X = (V01 - 25.0)/10.0;
+      if(!bomba)
+      {
+        V01 -= 2;
+        atualPosicaoSlider1_X = (V01 - 25.0)/10.0;
+
+      }
 
     }else{
-      V02 -= 2;
-      atualPosicaoSlider2_X = (V02 - 25.0)/10.0;
+      if(!bomba)
+      {
+        V02 -= 2;
+        atualPosicaoSlider2_X = (V02 - 25.0)/10.0;
+      }
 
     }
 
@@ -1288,15 +1303,10 @@ void Teclado(unsigned char tecla, int x1, int y1)
 
 void redisplay(int value){
   printf("X_bomba %d\n", value);
-  delta_tempo += 0.1;
+  if(bomba){
+    delta_tempo += 0.1;
+  }
   glutPostRedisplay();
-}
-
-void time1(int value)
-{
-  //printf("Time: %d\n",value );
-  glutPostRedisplay();
-  glutTimerFunc(10, time1, value+1);
 }
 
 
@@ -1320,7 +1330,7 @@ void mouseFunc(int button, int state, int x, int y )
           {
             sliding = true;
             mouse_X0 = x;
-            
+
 
           }
         }
@@ -1376,7 +1386,7 @@ void motionFunc(int x, int y)
         if(atualPosicaoSlider1_X + translate_slider >=5.0/2.0 || atualPosicaoSlider1_X + translate_slider <= -5.0/2.0)
         {
           translate_slider = oldTranslate_slider;
-          
+
         }
 
         printf("track_x: %f\n", x - mouse_X0 );
@@ -1395,7 +1405,7 @@ void motionFunc(int x, int y)
       if(atualPosicaoSlider2_X + translate_slider2 >= 5.0/2.0 || atualPosicaoSlider2_X + translate_slider2 <= -5.0/2.0)
       {
         translate_slider2 = oldTranslate_slider2;
-        
+
       }
 
       printf("track_x: %f\n", x - mouse_X0 );
