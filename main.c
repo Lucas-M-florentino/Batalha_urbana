@@ -374,138 +374,107 @@ void impacto(float x, float y){
 /// carrinho 1
 void tank_Vermelho()
 {
-  // escotilha
-  glTranslatef(0.0,0.7,0);
-  glPushMatrix();
-  glTranslatef(0, ty / 4, 0);
-  glColor3f(1.9, 0.0, 0.0); /////    vermelho
-  glTranslatef(-(0.1 * tx), (ty * 1.4), 0);
+glPushMatrix();
+  /////////////////////////////// escotilha
+  glColor3f(1.0,0.0,0.0); ///  vermelho
+  glTranslatef(-(0.1 * tx), (ty * 1.65)+0.7, 0);
   glScaled(1.3, 1.3, 0.0);
   glRotatef(RotC1, 0, 0, 1);
   circulos();
-  glScaled((1 / 1.3), (1 / 1.3), 0.0);
-  glTranslatef(0.1 * tx, -(ty * 1.4), 0);
-
-  /// canhão
-  glColor3f(0.0, 0.0, 0.0); //////    preto
-  glScaled(0.4, 0.4, 0.0);
-  glTranslatef(-ty/1.3, tx, 0);
-  canhao();
-  glTranslatef(ty/1.3, -tx, 0);
-  glScaled(2.5, 2.5, 0.0);
-
-  //// boca canhão
-  glColor3f(0.5, 0.5, 0.5);
-  glScaled(0.3, 0.3, 0.0);
-  glTranslatef(-ty/2.9, tx, 0);
-  glRotatef(90, 0, 0, 1);
-  glTranslatef(tx+(3*ty), ty * 0.7, 0);
-  circulos();
-  glTranslatef(-tx-(3*ty), -ty * 0.7, 0);
-  glRotatef(-90, 0, 0, 1);
-  glTranslatef(ty/2.8, -tx, 0);
-
-  glScaled(1/0.3, 1/0.3, 0.0);
-
-  // basecanhao
-  glColor3f(0.5, 0.5, 0.5);
-  glTranslatef(-(0.1 * tx), (ty * 1.4), 0);
-  glScaled(0.5, 0.5, 0.0);
-  circulos();
-  glScaled(2, 2, 0.0);
-  glTranslatef(0.1 * tx, -(ty * 1.4), 0);
   glPopMatrix();
-  // carroceria
-  glColor3f(1.9, 0.0, 0.0);
+  /////////////////////////////// canh�o
+  glPushMatrix();
+  glTranslatef(-tx/10.5,1.6*ty+0.7, 0);
+  glColor3f(0.0, 0.0, 0.0); ////// preto
+  glScaled(0.4, 0.4, 0.0);
+  glRotatef(RotC1, 0, 0, 1);
+  canhao();
+  ///////////////////////////// boca canh�o
+  glColor3f(0.5, 0.5, 0.5);
+  glTranslatef(0,3.2*ty,0);
+  glScaled(0.8, 0.8, 0.0);
+  circulos();
+  glPopMatrix();
+  /////////////////////////// basecanhao
+  glPushMatrix();
+  glColor3f(0.5, 0.5, 0.5);
+  glTranslatef(-(0.1 * tx), (ty * 1.6)+0.7, 0);
+  glScaled(0.5, 0.5, 0.0);
+  glRotatef(RotC1, 0, 0, 1);
+  circulos();
+  glPopMatrix();
+  //////////////////////////// carroceria
+  glPushMatrix();
+  glColor3f(1.0,0.0,0.0); //// vermelho
+  glTranslatef(0,0.7,0);
   retangulos();
-  glTranslatef(0, -ty / 4, 0);
-
-  /// rodas
-
-  glColor3f(0.0, 0.0, 0.0);
-
-  glTranslatef(-0.2 * tx, 0, 0);
+  glPopMatrix();
+  ////////////////////////////// rodas
+  glPushMatrix();
+  glTranslatef(-0.2*tx, -(ty / 4)+0.7, 0);
+  glColor3f(0.0, 0.0, 0.0); ////   preto
   glScaled(0.4, 0.4, 0.0);
   circulos();
-  glScaled(2.5, 2.5, 0.0);
-
-  glTranslatef(0.4 * tx, 0, 0);
+  glPopMatrix();
+  glPushMatrix();
+  glTranslatef(0.2 * tx, -(ty/4)+0.7, 0);
   glScaled(0.4, 0.4, 0.0);
   circulos();
-  glScaled(2.5, 2.5, 0.0);
-  glTranslatef(-0.2 * tx, 0, 0);
-  glTranslatef(0.0,-0.7,0);
-
+  glPopMatrix();
 }
 /// carrinho 2
 void tank_Azul()
 {
-
   ////////////////////////////////  Tank azul
-  glTranslatef(0.0,0.7,0);
   glRotatef(180, 0, 1, 0); //////   rotaciona em y
   glPushMatrix();
-  // escotilha
-  glTranslatef(0, (ty / 4), 0);
+  /////////////////////////////// escotilha
   glColor3f(0.0,1.0,1.0); ///  azul claro
-  glTranslatef(-(0.1 * tx), (ty * 1.4), 0);
+  glTranslatef(-(0.1 * tx), (ty * 1.65)+0.7, 0);
   glScaled(1.3, 1.3, 0.0);
   glRotatef(RotC2, 0, 0, 1);
   circulos();
-  glScaled((1 / 1.3), (1 / 1.3), 0.0);
-  glTranslatef(0.1 * tx, -(ty * 1.4), 0);
-  /// canhão
-  glColor3f(0.0, 0.0, 0.0); //////    preto
-
-  glScaled(0.4, 0.4, 0.0);
-  glTranslatef(-ty/1.3, tx, 0);
-  canhao();
-  glTranslatef(ty/1.3, -tx, 0);
-  glScaled(2.5, 2.5, 0.0);
-
-  //// boca canhão
-  glColor3f(0.5, 0.5, 0.5);
-
-  glScaled(0.3, 0.3, 0.0);
-  glTranslatef(-ty/2.9, tx, 0);
-  glRotatef(90, 0, 0, 1);
-  glTranslatef(tx+(3*ty), ty * 0.7, 0);
-  circulos();
-  glTranslatef(-tx-(3*ty), -ty * 0.7, 0);
-  glRotatef(-90, 0, 0, 1);
-  glTranslatef(ty/2.8, -tx, 0);
-
-  glScaled(1/0.3, 1/0.3, 0.0);
-
-
-  // basecanhao
-  glColor3f(0.5, 0.5, 0.5);
-  glTranslatef(-(0.1 * tx), (ty * 1.4), 0);
-  glScaled(0.5, 0.5, 0.0);
-  circulos();
-  glScaled(2, 2, 0.0);
-  glTranslatef(0.1 * tx, -(ty * 1.4), 0);
   glPopMatrix();
-  // carroceria
-    glColor3f(0.0,1.0,1.0); ////   azul claro
+  /////////////////////////////// canh�o
+  glPushMatrix();
+  glTranslatef(-tx/10.5,1.6*ty+0.7, 0);
+  glColor3f(0.0, 0.0, 0.0); ////// preto
+  glScaled(0.4, 0.4, 0.0);
+  glRotatef(RotC2, 0, 0, 1);
+  canhao();
+  ///////////////////////////// boca canh�o
+  glColor3f(0.5, 0.5, 0.5);
+  glTranslatef(0,3.2*ty,0);
+  glScaled(0.8, 0.8, 0.0);
+  circulos();
+  glPopMatrix();
+  /////////////////////////// basecanhao
+  glPushMatrix();
+  glColor3f(0.5, 0.5, 0.5);
+  glTranslatef(-(0.1 * tx), (ty * 1.6)+0.7, 0);
+  glScaled(0.5, 0.5, 0.0);
+  glRotatef(RotC2, 0, 0, 1);
+  circulos();
+  glPopMatrix();
+  //////////////////////////// carroceria
+  glPushMatrix();
+  glColor3f(0.0,1.0,1.0); //// azul claro
+  glTranslatef(0,0.7,0);
   retangulos();
-  glTranslatef(0, -(ty / 4), 0);
-
-  /// rodas
+  glPopMatrix();
+  ////////////////////////////// rodas
+  glPushMatrix();
+  glTranslatef(-0.2*tx, -(ty / 4)+0.7, 0);
   glColor3f(0.0, 0.0, 0.0); ////   preto
-  glTranslatef(-0.2 * tx, 0, 0);
   glScaled(0.4, 0.4, 0.0);
   circulos();
-  glScaled(2.5, 2.5, 0.0);
-
-  glTranslatef(0.4 * tx, 0, 0);
+  glPopMatrix();
+  glPushMatrix();
+  glTranslatef(0.2 * tx, -(ty/4)+0.7, 0);
   glScaled(0.4, 0.4, 0.0);
   circulos();
-  glScaled(2.5, 2.5, 0.0);
-  glTranslatef(-0.2 * tx, 0, 0);
-
+  glPopMatrix();
   glRotatef(-180, 0, 1, 0); //////   rotaciona em y
-  glTranslatef(0.0,-0.7,0);
 }
 //// desenha um tijolo
 static void tijolo()
