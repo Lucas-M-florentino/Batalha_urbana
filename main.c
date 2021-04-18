@@ -1,9 +1,11 @@
 /*****************************************************************************
  *  Universidade Federal da Grande Dourados - UFGD                           *
- *  Trabalho 1 da disciplina de Computa��o Gr�fica - Batalha Urbana          *
+ *  Trabalho 1 da disciplina de Computação Gráfica - Batalha Urbana          *
  *  Caio Fernandes Lima, Lucas Matheus de Moraes Florentino                  *
  *****************************************************************************/
 
+#include <stdio.h>
+#include <GL/glut.h>
 #include <stdlib.h>
 #include <math.h>
 #include <stdbool.h>
@@ -258,7 +260,7 @@ void textoBotoes()
 
 }
 
-//// texto de pontua��o para jogadores
+//// texto de pontuação para jogadores
 void textoPonto()
 {
     char buf[100] = {0};
@@ -283,7 +285,7 @@ void textoPonto()
     renderbitmap(8,66,GLUT_BITMAP_HELVETICA_18, buf);
 
 }
-//// texto de anima��o para colis�op carrinho
+//// texto de animação para colisãop carrinho
 void textoboom(float R, float G, float B, float x, float y)
 {
     char buf[100] = {0};
@@ -293,7 +295,7 @@ void textoboom(float R, float G, float B, float x, float y)
     renderbitmap(-2.9 + x,-1 + y,GLUT_BITMAP_HELVETICA_18,buf);
 }
 
-/// parte da anima��o para carrinho
+/// parte da animação para carrinho
 void elipse()
 {
   glBegin(GL_LINES);
@@ -318,7 +320,7 @@ void elipse()
   glEnd();
 }
 
-/// anima��o de colis�o com carrinho
+/// animação de colisão com carrinho
 void impacto(float x, float y){
   int i = -90;
   int c = 0;
@@ -372,130 +374,138 @@ void impacto(float x, float y){
 /// carrinho 1
 void tank_Vermelho()
 {
-glPushMatrix();
-
-  /////////////////////////////// escotilha
-  glColor3f(1.0,0.0,0.0); ///  vermelho
-  glTranslatef(-(0.1 * tx), (ty * 1.65)+0.7, 0);
+  // escotilha
+  glTranslatef(0.0,0.7,0);
+  glPushMatrix();
+  glTranslatef(0, ty / 4, 0);
+  glColor3f(1.9, 0.0, 0.0); /////    vermelho
+  glTranslatef(-(0.1 * tx), (ty * 1.4), 0);
   glScaled(1.3, 1.3, 0.0);
   glRotatef(RotC1, 0, 0, 1);
   circulos();
-  glPopMatrix();
+  glScaled((1 / 1.3), (1 / 1.3), 0.0);
+  glTranslatef(0.1 * tx, -(ty * 1.4), 0);
 
-  /////////////////////////////// canh�o
-  glPushMatrix();
-  glTranslatef(-tx/10.5,1.6*ty+0.7, 0);
-  glColor3f(0.0, 0.0, 0.0); ////// preto
+  /// canhão
+  glColor3f(0.0, 0.0, 0.0); //////    preto
   glScaled(0.4, 0.4, 0.0);
-  glRotatef(RotC1, 0, 0, 1);
+  glTranslatef(-ty/1.3, tx, 0);
   canhao();
+  glTranslatef(ty/1.3, -tx, 0);
+  glScaled(2.5, 2.5, 0.0);
 
-
-  ///////////////////////////// boca canh�o
-
+  //// boca canhão
   glColor3f(0.5, 0.5, 0.5);
-  glTranslatef(0,3.2*ty,0);
-  glScaled(0.8, 0.8, 0.0);
+  glScaled(0.3, 0.3, 0.0);
+  glTranslatef(-ty/2.9, tx, 0);
+  glRotatef(90, 0, 0, 1);
+  glTranslatef(tx+(3*ty), ty * 0.7, 0);
   circulos();
-  glPopMatrix();
+  glTranslatef(-tx-(3*ty), -ty * 0.7, 0);
+  glRotatef(-90, 0, 0, 1);
+  glTranslatef(ty/2.8, -tx, 0);
 
+  glScaled(1/0.3, 1/0.3, 0.0);
 
-  /////////////////////////// basecanhao
-  glPushMatrix();
+  // basecanhao
   glColor3f(0.5, 0.5, 0.5);
-  glTranslatef(-(0.1 * tx), (ty * 1.6)+0.7, 0);
+  glTranslatef(-(0.1 * tx), (ty * 1.4), 0);
   glScaled(0.5, 0.5, 0.0);
-  glRotatef(RotC1, 0, 0, 1);
   circulos();
+  glScaled(2, 2, 0.0);
+  glTranslatef(0.1 * tx, -(ty * 1.4), 0);
   glPopMatrix();
-
-  //////////////////////////// carroceria
-  glPushMatrix();
-  glColor3f(1.0,0.0,0.0); //// vermelho
-  glTranslatef(0,0.7,0);
+  // carroceria
+  glColor3f(1.9, 0.0, 0.0);
   retangulos();
-  glPopMatrix();
+  glTranslatef(0, -ty / 4, 0);
 
-  ////////////////////////////// rodas
-  glPushMatrix();
-  glTranslatef(-0.2*tx, -(ty / 4)+0.7, 0);
-  glColor3f(0.0, 0.0, 0.0); ////   preto
+  /// rodas
+
+  glColor3f(0.0, 0.0, 0.0);
+
+  glTranslatef(-0.2 * tx, 0, 0);
   glScaled(0.4, 0.4, 0.0);
   circulos();
-  glPopMatrix();
+  glScaled(2.5, 2.5, 0.0);
 
-  glPushMatrix();
-  glTranslatef(0.2 * tx, -(ty/4)+0.7, 0);
+  glTranslatef(0.4 * tx, 0, 0);
   glScaled(0.4, 0.4, 0.0);
   circulos();
-  glPopMatrix();
+  glScaled(2.5, 2.5, 0.0);
+  glTranslatef(-0.2 * tx, 0, 0);
+  glTranslatef(0.0,-0.7,0);
+
 }
 /// carrinho 2
 void tank_Azul()
 {
 
   ////////////////////////////////  Tank azul
+  glTranslatef(0.0,0.7,0);
   glRotatef(180, 0, 1, 0); //////   rotaciona em y
   glPushMatrix();
-
-  /////////////////////////////// escotilha
+  // escotilha
+  glTranslatef(0, (ty / 4), 0);
   glColor3f(0.0,1.0,1.0); ///  azul claro
-  glTranslatef(-(0.1 * tx), (ty * 1.65)+0.7, 0);
+  glTranslatef(-(0.1 * tx), (ty * 1.4), 0);
   glScaled(1.3, 1.3, 0.0);
   glRotatef(RotC2, 0, 0, 1);
   circulos();
-  glPopMatrix();
+  glScaled((1 / 1.3), (1 / 1.3), 0.0);
+  glTranslatef(0.1 * tx, -(ty * 1.4), 0);
+  /// canhão
+  glColor3f(0.0, 0.0, 0.0); //////    preto
 
-  /////////////////////////////// canh�o
-  glPushMatrix();
-  glTranslatef(-tx/10.5,1.6*ty+0.7, 0);
-  glColor3f(0.0, 0.0, 0.0); ////// preto
   glScaled(0.4, 0.4, 0.0);
-  glRotatef(RotC2, 0, 0, 1);
+  glTranslatef(-ty/1.3, tx, 0);
   canhao();
+  glTranslatef(ty/1.3, -tx, 0);
+  glScaled(2.5, 2.5, 0.0);
 
-
-  ///////////////////////////// boca canh�o
-
+  //// boca canhão
   glColor3f(0.5, 0.5, 0.5);
-  glTranslatef(0,3.2*ty,0);
-  glScaled(0.8, 0.8, 0.0);
+
+  glScaled(0.3, 0.3, 0.0);
+  glTranslatef(-ty/2.9, tx, 0);
+  glRotatef(90, 0, 0, 1);
+  glTranslatef(tx+(3*ty), ty * 0.7, 0);
   circulos();
-  glPopMatrix();
+  glTranslatef(-tx-(3*ty), -ty * 0.7, 0);
+  glRotatef(-90, 0, 0, 1);
+  glTranslatef(ty/2.8, -tx, 0);
+
+  glScaled(1/0.3, 1/0.3, 0.0);
 
 
-  /////////////////////////// basecanhao
-  glPushMatrix();
+  // basecanhao
   glColor3f(0.5, 0.5, 0.5);
-  glTranslatef(-(0.1 * tx), (ty * 1.6)+0.7, 0);
+  glTranslatef(-(0.1 * tx), (ty * 1.4), 0);
   glScaled(0.5, 0.5, 0.0);
-  glRotatef(RotC2, 0, 0, 1);
   circulos();
+  glScaled(2, 2, 0.0);
+  glTranslatef(0.1 * tx, -(ty * 1.4), 0);
   glPopMatrix();
-
-  //////////////////////////// carroceria
-  glPushMatrix();
-  glColor3f(0.0,1.0,1.0); //// azul claro
-  glTranslatef(0,0.7,0);
+  // carroceria
+    glColor3f(0.0,1.0,1.0); ////   azul claro
   retangulos();
-  glPopMatrix();
+  glTranslatef(0, -(ty / 4), 0);
 
-  ////////////////////////////// rodas
-  glPushMatrix();
-  glTranslatef(-0.2*tx, -(ty / 4)+0.7, 0);
+  /// rodas
   glColor3f(0.0, 0.0, 0.0); ////   preto
+  glTranslatef(-0.2 * tx, 0, 0);
   glScaled(0.4, 0.4, 0.0);
   circulos();
-  glPopMatrix();
+  glScaled(2.5, 2.5, 0.0);
 
-  glPushMatrix();
-  glTranslatef(0.2 * tx, -(ty/4)+0.7, 0);
+  glTranslatef(0.4 * tx, 0, 0);
   glScaled(0.4, 0.4, 0.0);
   circulos();
-  glPopMatrix();
+  glScaled(2.5, 2.5, 0.0);
+  glTranslatef(-0.2 * tx, 0, 0);
 
   glRotatef(-180, 0, 1, 0); //////   rotaciona em y
-
+  glTranslatef(0.0,-0.7,0);
 }
 //// desenha um tijolo
 static void tijolo()
@@ -509,7 +519,7 @@ static void tijolo()
     glEnd();
 
 }
-/// desenha peda�o de tijolos no quadro muro
+/// desenha pedaço de tijolos no quadro muro
 static void pedacoMuro(int altura, int largura, int transladado)
 {
 
@@ -689,7 +699,7 @@ void muros2()
   pedacoMuro(5 , 5.0 , 1);
 
 }
-void espaco1(){///// mapeia possiveis posi��es para carrinhos
+void espaco1(){///// mapeia possiveis posições para carrinhos
 
 
   vetPCarM1[0][0] = -ORTO_X + ((2.5 * WIDTH_TIJOLO)/2);
@@ -744,8 +754,6 @@ void menuBox(){
   retMenu(10*WIDTH_TIJOLO,10*HEIGHT_TIJOLO);
   glLoadIdentity();
   textoBotoes();
-
-
 }
 
 void spawnCar2(){
@@ -796,7 +804,7 @@ void spawnCar2(){
   }
 void transformacao(){
 
-  if(!posicao || novoJogo){ // sorteia posi��o para os carros e novo mapa
+  if(!posicao && !colisao || novoJogo && !colisao){ // sorteia posição para os carros e novo mapa
     spawnCar2();
     posicao = true;
   }
@@ -823,11 +831,11 @@ void transformacao(){
 
   if(jogada == 0){
     glLoadIdentity();
-    glTranslatef(-0.66 * WIDTH_TIJOLO+atualPcar1[0],-1* HEIGHT_TIJOLO+atualPcar1[1]+0.7,0); // tra�o da trajetoria do tiro para joagdor 1
+    glTranslatef(-0.66 * WIDTH_TIJOLO+atualPcar1[0],-1* HEIGHT_TIJOLO+atualPcar1[1]+0.7,0); // traço da trajetoria do tiro para joagdor 1
     trajetoria(teta_tankVermelho,V01);
   }else{
   glLoadIdentity();
-  glTranslatef(-0.35 * WIDTH_TIJOLO+atualPcar2[0],-1* HEIGHT_TIJOLO+atualPcar2[1]+0.7,0);// tra�o da trajetoria do tiro para joagdor 2
+  glTranslatef(-0.35 * WIDTH_TIJOLO+atualPcar2[0],-1* HEIGHT_TIJOLO+atualPcar2[1]+0.7,0);// traço da trajetoria do tiro para joagdor 2
   trajetoria(teta_tankAzul,V02);
   }
 
@@ -849,7 +857,7 @@ void transformacao(){
       glLoadIdentity();
       impacto(atualPcar2[0],atualPcar2[1]);
         glutPostRedisplay();
-      if(tcolisao < 100){
+      if(tcolisao < 50){
         tcolisao += 1;
       }
       else{
@@ -905,7 +913,7 @@ static void balisticaBomba()
     translateY = Y_bomba + delta_espaco_Y + (3.7+atualPcar1[1]);
 
 
-    if(translateX > PColisao2[0] - tx/2 && translateX < PColisao2[0] + tx/2 // trata colis�o com jogador 2
+    if(translateX > PColisao2[0] - tx/2 && translateX < PColisao2[0] + tx/2 // trata colisão com jogador 2
       && translateY > PColisao2[1] &&  translateY < PColisao2[1] + ty+3.5){
 
     colisao = true;
@@ -931,7 +939,7 @@ static void balisticaBomba()
           && translateY > -ORTO_Y + 14 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 14 *  HEIGHT_TIJOLO + 10 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 17.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 17.5 * WIDTH_TIJOLO + 2.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 12 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 12 *  HEIGHT_TIJOLO + 10 * HEIGHT_TIJOLO ||
-          translateX < -ORTO_X || translateY < -ORTO_Y || translateX > ORTO_X){  //////// trata colis�o com muro e laterais da janela para jogador 1
+          translateX < -ORTO_X || translateY < -ORTO_Y || translateX > ORTO_X){  //////// trata colisão com muro e laterais da janela para jogador 1
 
           colisaoM = true;
 
@@ -949,7 +957,7 @@ static void balisticaBomba()
       }
 
 
-      else{ ////   lan�amento de projetil
+      else{ ////   lançamento de projetil
 
         glLoadIdentity();
         glColor3f(0.0,0.0,0.0);
@@ -957,12 +965,12 @@ static void balisticaBomba()
         glScaled(0.5, 0.5, 0.0);
         Bomba();
         glScaled(1/0.5, 1/0.5, 0.0);
-        glutTimerFunc(10, redisplay, X_bomba);
+        glutTimerFunc(30, redisplay, X_bomba);
 
       }
   }
   else{
-    if(translateX > -ORTO_X && translateX < -ORTO_X + 22.5 * WIDTH_TIJOLO     ////////    trata colis�o com muro e laterais da janela
+    if(translateX > -ORTO_X && translateX < -ORTO_X + 22.5 * WIDTH_TIJOLO     ////////    trata colisão com muro e laterais da janela
           && translateY > -ORTO_Y && translateY < -ORTO_Y + 9 * HEIGHT_TIJOLO || translateX > -ORTO_X && translateX < -ORTO_X + 2.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO +  6 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 7.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 7.5 * WIDTH_TIJOLO + 2.5 * WIDTH_TIJOLO
@@ -990,14 +998,14 @@ static void balisticaBomba()
       }
 
     else{
-      /////  lan�amento de projetil
+      /////  lançamento de projetil
       glLoadIdentity();
       glColor3f(0.0,0.0,0.0);
       glTranslatef(translateX, translateY, 0.0);
       glScaled(0.5, 0.5, 0.0);
       Bomba();
       glScaled(1/0.5, 1/0.5, 0.0);
-      glutTimerFunc(10, redisplay, X_bomba);
+      glutTimerFunc(30, redisplay, X_bomba);
 
    }
   }
@@ -1006,7 +1014,7 @@ static void balisticaBomba()
     translateX = X_bomba + delta_espaco_X + ( atualPcar2[0]+0.4);////// posiciona objetos para jogador 2
     translateY = Y_bomba + delta_espaco_Y + (3.7+atualPcar2[1]);
 
-    if(translateX > PColisao1[0] - tx/2 && translateX < PColisao1[0] + tx/2 //// trata colis�o com jgador 1
+    if(translateX > PColisao1[0] - tx/2 && translateX < PColisao1[0] + tx/2 //// trata colisão com jgador 1
     && translateY > PColisao1[1] && translateY < PColisao1[1] + ty+3.5){
 
     colisao = true;
@@ -1023,7 +1031,7 @@ static void balisticaBomba()
     glutPostRedisplay();
   }
   else if(mapa == 0){
-      if(translateX > -ORTO_X && translateX < -ORTO_X + 22.5 * WIDTH_TIJOLO     ////////    trata colis�o com muro e laterais da janela
+      if(translateX > -ORTO_X && translateX < -ORTO_X + 22.5 * WIDTH_TIJOLO     ////////    trata colisão com muro e laterais da janela
           && translateY > -ORTO_Y && translateY < -ORTO_Y + 9 * HEIGHT_TIJOLO || translateX > -ORTO_X + 2.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 2.5 * WIDTH_TIJOLO + 6.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO + 15 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 12 * WIDTH_TIJOLO && translateX < -ORTO_X + 12 * WIDTH_TIJOLO + 8.5 * WIDTH_TIJOLO
@@ -1051,19 +1059,19 @@ static void balisticaBomba()
       }
 
     else{
-      /////  lan�amento de projetil
+      /////  lançamento de projetil
       glLoadIdentity();
       glColor3f(0.0,0.0,0.0);
       glTranslatef(translateX, translateY, 0.0);
       glScaled(0.5, 0.5, 0.0);
       Bomba();
       glScaled(1/0.5, 1/0.5, 0.0);
-      glutTimerFunc(10, redisplay, X_bomba);
+      glutTimerFunc(30, redisplay, X_bomba);
 
    }
   }
   else{
-    if(translateX > -ORTO_X && translateX < -ORTO_X + 22.5 * WIDTH_TIJOLO     ////////    trata colis�o com muro e laterais da janela
+    if(translateX > -ORTO_X && translateX < -ORTO_X + 22.5 * WIDTH_TIJOLO     ////////    trata colisão com muro e laterais da janela
           && translateY > -ORTO_Y && translateY < -ORTO_Y + 9 * HEIGHT_TIJOLO || translateX > -ORTO_X && translateX < -ORTO_X + 2.5 * WIDTH_TIJOLO
           && translateY > -ORTO_Y + 9 *  HEIGHT_TIJOLO && translateY < -ORTO_Y + 9 *  HEIGHT_TIJOLO +  6 * HEIGHT_TIJOLO ||
           translateX > -ORTO_X + 7.5 * WIDTH_TIJOLO && translateX < -ORTO_X + 7.5 * WIDTH_TIJOLO + 2.5 * WIDTH_TIJOLO
@@ -1091,14 +1099,14 @@ static void balisticaBomba()
       }
 
     else{
-      /////  lan�amento de projetil
+      /////  lançamento de projetil
       glLoadIdentity();
       glColor3f(0.0,0.0,0.0);
       glTranslatef(translateX, translateY, 0.0);
       glScaled(0.5, 0.5, 0.0);
       Bomba();
       glScaled(1/0.5, 1/0.5, 0.0);
-      glutTimerFunc(10, redisplay, X_bomba);
+      glutTimerFunc(30, redisplay, X_bomba);
 
    }
   }
@@ -1106,7 +1114,6 @@ static void balisticaBomba()
 
   printf("translateX: %f\n",translateX );
   printf("translateY: %f\n", translateY);
-
 
 }
 
@@ -1181,7 +1188,7 @@ void Teclado(unsigned char tecla, int x1, int y1)
 
 
 
-      printf("Rota��o anti horario\n");
+      printf("Rotação anti horario\n");
     }
     break;
   case 'l':
@@ -1193,7 +1200,7 @@ void Teclado(unsigned char tecla, int x1, int y1)
 
 
 
-      printf("Rota��o horario\n");
+      printf("Rotação horario\n");
     }
     break;
   case 'd':
