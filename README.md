@@ -6,7 +6,7 @@ Acadêmicos: Caio Fernandes Lima, Lucas Matheus de Moraes Florentino
 Execute os seguintes comandos  no terminal linux:
 
 Compile o arquivo:
-g++ batalha.cpp -lGL -lGLU -lglut -lm -o batalha
+g++ main.c -lGL -lGLU -lglut -lm -o batalha
 
 Execute o arquivo:
 ./batalha
